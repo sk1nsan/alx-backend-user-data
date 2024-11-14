@@ -4,6 +4,7 @@
 from flask import request
 from typing import List, TypeVar
 import fnmatch
+import os
 
 
 class Auth:
@@ -38,3 +39,12 @@ class Auth:
         """ Method to get user from request.
         """
         return None
+
+    def session_cookie(self, request=None):
+        """ returns a cookie value from a request """
+        if not request:
+            return None
+        cookie = request.cookies.get('_my_session_id')
+        if cookie:
+            os.environ["SESSION_NAME"] = cookie
+        return cookie
