@@ -4,6 +4,7 @@
 from api.v1.views import app_views
 from flask import jsonify, request
 from models.user import User
+import os
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
@@ -25,5 +26,5 @@ def session_login() -> str:
         from api.v1.app import auth
         session_id = auth.create_session(user.id)
         out = jsonify(user.to_json())
-        out.set_cookie('SESSION_NAME', session_id)
+        out.set_cookie(os.environ.get('SESSION_NAME'), session_id)
         return out

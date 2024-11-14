@@ -68,8 +68,7 @@ def authenticate_user():
                 abort(401)
             if user is None:
                 abort(403)
-            if auth_header is None:
-                abort(401)
+            return jsonify(user.to_json())
 
 
 if __name__ == "__main__":
