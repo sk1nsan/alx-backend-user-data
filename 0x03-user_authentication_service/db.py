@@ -43,9 +43,6 @@ class DB:
     def find_user_by(self, **kwargs):
         """ Find users by given keyword arguments
         """
-        if not kwargs:
-            raise InvalidRequestError
-
         column_names = User.__table__.columns.keys()
         for key in kwargs.keys():
             if key not in column_names:
