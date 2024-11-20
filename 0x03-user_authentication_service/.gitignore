@@ -1,0 +1,4 @@
+**/__pycache__/
+.env
+.db_User.json
+main_*.py
