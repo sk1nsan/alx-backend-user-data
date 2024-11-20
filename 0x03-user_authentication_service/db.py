@@ -44,4 +44,6 @@ class DB:
         """ Find users by given keyword arguments
         """
         found_user = self._session.query(User).filter_by(**kwargs).first()
+        if not found_user:
+            raise NoResultFound
         return found_user
