@@ -6,6 +6,7 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
+
 @app.route("/", methods=["GET"], strict_slashes=False)
 def index() -> str:
     """ route for index page
