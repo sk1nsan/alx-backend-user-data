@@ -40,7 +40,7 @@ class DB:
         self._session.commit()
         return new_user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         """ Find users by given keyword arguments
         """
         column_names = User.__table__.columns.keys()
@@ -52,3 +52,13 @@ class DB:
         if not found_user:
             raise NoResultFound
         return found_user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """ Update user of a given id with the keyword arguments
+        """
+        user = self.find_user_by(id=user_id)
+        column_names = User.__table__.columns.keys()
+        for key, value in kwargs.items():
+            if key not in column_names:
+                raise ValueError
+            setattr(user, key, value)
