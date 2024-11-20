@@ -2,7 +2,11 @@
 """ Flask App
 """
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+from auth import Auth
+
+
+AUTH = Auth()
 
 app = Flask(__name__)
 
@@ -12,6 +16,20 @@ def index() -> str:
     """ route for index page
     """
     return jsonify({"message": "Bienvenue"})
+
+
+@app.route("/users", methods=["POST"], strict_slashes=False)
+def users() -> str:
+    """ route for registering a user
+    """
+    email = request.form['email']
+    password = request.form['password']
+    try:
+        new_user = AUTH.register_user(email, password)
+        return jsonify({
+            "email": f"{new_user.email}", "message": "user created"}), 400
+    except ValueError:
+        return jsonify({"message": "email already registered"}), 400
 
 
 if __name__ == "__main__":
