@@ -4,6 +4,7 @@
 
 from flask import Flask, jsonify, request
 from auth import Auth
+from typing import Tuple
 
 
 AUTH = Auth()
@@ -19,7 +20,7 @@ def index() -> str:
 
 
 @app.route("/users", methods=["POST"], strict_slashes=False)
-def users() -> str:
+def users() -> Tuple:
     """ route for registering a user
     """
     email = request.form['email']
@@ -27,7 +28,7 @@ def users() -> str:
     try:
         new_user = AUTH.register_user(email, password)
         return jsonify({
-            "email": f"{new_user.email}", "message": "user created"}), 400
+            "email": f"{new_user.email}", "message": "user created"}), 200
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
 
