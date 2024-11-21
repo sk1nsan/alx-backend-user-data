@@ -2,7 +2,9 @@
 """ Flask App
 """
 
-from flask import Flask, Response, jsonify, request, abort, make_response
+from flask import (
+    Flask, Response, jsonify, request, abort, make_response, redirect
+)
 from auth import Auth
 from typing import Tuple
 
@@ -46,6 +48,18 @@ def login() -> Response:
         resp.set_cookie("session_id", AUTH.create_session(email))
         return resp
     abort(401)
+
+
+@app.route("/sessions", methods=["DELETE"], strict_slashes=False)
+def logout() -> Response:
+    """ route for logging out
+    """
+    session_id = request.cookies.get('session_id')
+    found_user = AUTH.get_user_from_session_id(session_id)
+    if found_user:
+        AUTH.destroy_session(found_user.id)
+        return redirect("/")
+    abort(403)
 
 
 if __name__ == "__main__":
