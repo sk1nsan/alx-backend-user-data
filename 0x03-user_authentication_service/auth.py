@@ -6,6 +6,7 @@ import bcrypt
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
+import uuid
 
 
 class Auth:
@@ -38,6 +39,9 @@ class Auth:
 
         except NoResultFound:
             return False
+
+    def _generate_uuid(self) -> str:
+        return str(uuid.uuid4())
 
 
 def _hash_password(password: str) -> bytes:
