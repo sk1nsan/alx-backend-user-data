@@ -52,6 +52,18 @@ class Auth:
         except NoResultFound:
             return
 
+    def get_user_from_session_id(self, session_id: str) -> User | None:
+        """ returns the used corresponding to `session_id` or None if not found
+        """
+        my_db = self._db
+        if not session_id:
+            return None
+        try:
+            found_user = my_db.find_user_by(session_id=session_id)
+            return found_user
+        except NoResultFound:
+            return None
+
 
 def _hash_password(password: str) -> bytes:
     """ return a salted hash of the input password
