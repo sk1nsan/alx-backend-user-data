@@ -5,6 +5,7 @@ import bcrypt
 
 from db import DB
 from user import User
+from typing import Union
 from sqlalchemy.orm.exc import NoResultFound
 import uuid
 
@@ -52,7 +53,7 @@ class Auth:
         except NoResultFound:
             return
 
-    def get_user_from_session_id(self, session_id: str) -> User | None:
+    def get_user_from_session_id(self, session_id: str) -> Union[User, None]:
         """ returns the used corresponding to `session_id` or None if not found
         """
         my_db = self._db
