@@ -65,6 +65,17 @@ class Auth:
         except NoResultFound:
             return None
 
+    def destroy_session(self, user_id: int) -> None:
+        """ destroy session corresponding to `user_id`
+        """
+        my_db = self._db
+        try:
+            found_user = my_db.find_user_by(id=user_id)
+            found_user.session_id = None
+            return None
+        except NoResultFound:
+            return None
+
 
 def _hash_password(password: str) -> bytes:
     """ return a salted hash of the input password
