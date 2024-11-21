@@ -40,12 +40,15 @@ class Auth:
         except NoResultFound:
             return False
 
-    def _generate_uuid(self) -> str:
-        return str(uuid.uuid4())
-
 
 def _hash_password(password: str) -> bytes:
     """ return a salted hash of the input password
     """
     hashed = bcrypt.hashpw(str.encode(password), bcrypt.gensalt())
     return hashed
+
+
+def _generate_uuid() -> str:
+    """ return a string representation of a new UUID
+    """
+    return str(uuid.uuid4())
